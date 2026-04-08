@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import re
 from typing import Literal, Optional
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from pydantic import BaseModel, Field
+
+NUMERIC_PATTERN = re.compile(r"[-+]?\d+(?:\.\d+)?")
+SENTENCE_SPLIT_PATTERN = re.compile(r"(?<=[.!?])\s+")
 
 
 Decision = Literal["BUY", "HOLD", "SELL"]
@@ -14,6 +18,8 @@ SurgeDropSignal = Literal["surge", "drop", "neutral"]
 
 class MarketDataSummary(BaseModel):
     """Compact numeric market summary shared by both strategy agents."""
+
+    model_config = ConfigDict(extra="forbid")
 
     history_rows: int = Field(..., ge=1, description="Number of daily rows available.")
     has_full_30d_window: bool
@@ -46,6 +52,8 @@ class MarketDataSummary(BaseModel):
 class MarketDataContext(BaseModel):
     """Validated market data context consumed by later agent nodes."""
 
+    model_config = ConfigDict(extra="forbid")
+
     ticker: str
     run_date: str
     market_data_summary: MarketDataSummary
@@ -57,6 +65,8 @@ MarketDataPayload = MarketDataContext
 class StrategyDecision(BaseModel):
     """Structured output contract for each core strategy agent."""
 
+    model_config = ConfigDict(extra="forbid")
+
     name: StrategyName
     decision: Decision
     confidence: int = Field(..., ge=1, le=10)
@@ -64,9 +74,26 @@ class StrategyDecision(BaseModel):
         ..., description="Three to five sentences grounded in the supplied market data."
     )
 
+    @field_validator("justification")
+    @classmethod
+    def validate_justification(cls, value: str) -> str:
+        """Require 3-5 sentences and at least two numeric facts."""
+
+        sentences = [part.strip() for part in SENTENCE_SPLIT_PATTERN.split(value.strip()) if part.strip()]
+        if len(sentences) < 3 or len(sentences) > 5:
+            raise ValueError("Justification must contain 3 to 5 complete sentences.")
+
+        numbers = NUMERIC_PATTERN.findall(value)
+        if len(numbers) < 2:
+            raise ValueError("Justification must mention at least two numeric facts from context.")
+
+        return value
+
 
 class EvaluatorOutput(BaseModel):
     """Structured evaluator output for either consensus or disagreement."""
+
+    model_config = ConfigDict(extra="forbid")
 
     agents_agree: bool
     analysis: str = Field(
@@ -81,6 +108,8 @@ EvaluatorResult = EvaluatorOutput
 class DebateTurn(BaseModel):
     """Structured second-round response for a debate participant."""
 
+    model_config = ConfigDict(extra="forbid")
+
     name: StrategyName
     stance: Decision
     response: str = Field(
@@ -91,6 +120,8 @@ class DebateTurn(BaseModel):
 class DebateResult(BaseModel):
     """Optional bonus output attached only when disagreement occurs."""
 
+    model_config = ConfigDict(extra="forbid")
+
     triggered: bool = False
     strategy_a_response: Optional[DebateTurn] = None
     strategy_b_response: Optional[DebateTurn] = None
@@ -99,6 +130,8 @@ class DebateResult(BaseModel):
 
 class StockRunOutput(BaseModel):
     """Per-stock persisted result for grading-friendly submission."""
+
+    model_config = ConfigDict(extra="forbid")
 
     ticker: str
     run_date: str
@@ -112,6 +145,8 @@ class StockRunOutput(BaseModel):
 class SummaryRow(BaseModel):
     """Aggregated summary entry for one analyzed stock."""
 
+    model_config = ConfigDict(extra="forbid")
+
     ticker: str
     a_decision: Decision
     b_decision: Decision
@@ -120,6 +155,8 @@ class SummaryRow(BaseModel):
 
 class SummaryOutput(BaseModel):
     """Aggregate summary persisted as outputs/summary.json."""
+
+    model_config = ConfigDict(extra="forbid")
 
     strategies: list[StrategyName]
     stocks_analyzed: list[str]
