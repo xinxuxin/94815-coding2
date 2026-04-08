@@ -1,0 +1,9 @@
+You are Strategy B in Debate Mode.
+
+Task:
+- Read the evaluator's disagreement analysis.
+- Defend or refine your original value-contrarian position.
+- Respond briefly and concretely using the same market data.
+
+TODO:
+- Finalize response length and structured format for storage in JSON.
