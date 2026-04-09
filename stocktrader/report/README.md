@@ -1,8 +1,9 @@
-# Report Placeholder
+# Report Artifacts
 
-Place final report artifacts here in a later phase:
+This directory contains the final report deliverables:
 
+- `report.md`
 - `report.pdf`
+- `ai_use_appendix.md`
 - `ai_use_appendix.pdf`
-
-No report content has been drafted in this scaffold.
+- `architecture_diagram.png`

@@ -1,0 +1,47 @@
+{
+  "ticker": "XOM",
+  "run_date": "2026-04-08",
+  "market_data_summary": {
+    "history_rows": 250,
+    "has_full_30d_window": true,
+    "has_full_90d_window": true,
+    "has_full_1y_window": false,
+    "current_price": 156.22,
+    "price_30d_ago": 149.26,
+    "pct_change_30d": 4.663,
+    "avg_daily_volume_30d": 24909709.0,
+    "volatility_30d": 0.0186,
+    "moving_avg_20d": 161.249,
+    "moving_avg_50d": 153.2908,
+    "daily_return_mean_30d": 0.1696,
+    "max_single_day_drop_90d": -5.234,
+    "price_above_ma20": false,
+    "ma20_above_ma50": true,
+    "volume_vs_30d_avg": 1.2555,
+    "return_30d": 4.663,
+    "return_90d": 36.4248,
+    "distance_from_52w_high_pct": 8.8937,
+    "distance_from_52w_low_pct": 56.3294,
+    "recent_drawdown_pct": 8.8937,
+    "RSI_14": 48.2793,
+    "surge_or_drop_signal": "neutral"
+  },
+  "strategy_a": {
+    "name": "Momentum Trader",
+    "decision": "HOLD",
+    "confidence": 6,
+    "justification": "The current price of XOM is $156.22, which is below the 20-day moving average of $161.249, indicating a lack of immediate upward momentum. However, the 20-day moving average is above the 50-day moving average, suggesting a longer-term positive trend. Additionally, the volume is 25.55% above the 30-day average, providing some confirmation of strength. Given these factors, the trend is mildly positive but not decisive enough to warrant a buy."
+  },
+  "strategy_b": {
+    "name": "Value Contrarian",
+    "decision": "HOLD",
+    "confidence": 6,
+    "justification": "The stock is currently priced at $156.22, which is 8.89% below its 52-week high, indicating it is not overheated. The RSI is at 48.28, suggesting that the stock is neither oversold nor overbought. Additionally, the recent drawdown of 8.89% shows some weakness, but the overall trend does not indicate a clear buying opportunity at this moment."
+  },
+  "evaluator": {
+    "agents_agree": true,
+    "analysis": "Both strategies recommend a HOLD decision, indicating a consensus on the current market conditions for XOM. The Momentum Trader highlights the price being below the 20-day moving average, while the Value Contrarian points out that the stock is not overheated and the RSI is neutral. Both agents recognize the lack of a strong buying signal despite some positive indicators, leading to their agreement on holding the position."
+  },
+  "debate_mode": null,
+  "post_debate_synthesis": null
+}

@@ -6,7 +6,6 @@ import argparse
 import json
 import logging
 from pathlib import Path
-from typing import Optional
 
 from .config import Settings, get_settings
 from .market_data import build_market_data_context
@@ -15,6 +14,7 @@ from .orchestration import (
     run_pipeline_for_ticker,
     run_pipeline_for_tickers,
 )
+from .reporting import generate_all_reports
 from .stock_selector import CANDIDATE_UNIVERSE, select_representative_stocks
 from .strategy_agents import run_momentum_agent, run_value_contrarian_agent
 
@@ -50,7 +50,7 @@ def main() -> None:
 
     render_parser = subparsers.add_parser(
         "render-report",
-        help="Generate the architecture diagram artifact for the report",
+        help="Generate report markdown, PDFs, and the architecture diagram artifact",
     )
     render_parser.add_argument(
         "--output-root",
@@ -90,8 +90,9 @@ def main() -> None:
 
     if args.command == "render-report":
         output_root = Path(args.output_root) if args.output_root else None
-        path = render_architecture_diagram(project_root=output_root)
-        print(str(path))
+        render_architecture_diagram(project_root=output_root)
+        manifest = generate_all_reports(output_root or Path(__file__).resolve().parents[1])
+        print(json.dumps({key: str(value) for key, value in manifest.items()}, indent=2))
         return
 
     if args.command == "context":

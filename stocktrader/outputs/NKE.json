@@ -1,0 +1,61 @@
+{
+  "ticker": "NKE",
+  "run_date": "2026-04-08",
+  "market_data_summary": {
+    "history_rows": 250,
+    "has_full_30d_window": true,
+    "has_full_90d_window": true,
+    "has_full_1y_window": false,
+    "current_price": 43.13,
+    "price_30d_ago": 64.09,
+    "pct_change_30d": -32.704,
+    "avg_daily_volume_30d": 22495460.0,
+    "volatility_30d": 0.0302,
+    "moving_avg_20d": 50.9175,
+    "moving_avg_50d": 57.5768,
+    "daily_return_mean_30d": -1.2619,
+    "max_single_day_drop_90d": -15.5055,
+    "price_above_ma20": false,
+    "ma20_above_ma50": false,
+    "volume_vs_30d_avg": 1.1954,
+    "return_30d": -32.704,
+    "return_90d": -32.2707,
+    "distance_from_52w_high_pct": 45.5704,
+    "distance_from_52w_low_pct": 1.0307,
+    "recent_drawdown_pct": 36.3677,
+    "RSI_14": 18.8929,
+    "surge_or_drop_signal": "drop"
+  },
+  "strategy_a": {
+    "name": "Momentum Trader",
+    "decision": "SELL",
+    "confidence": 8,
+    "justification": "The current price of $43.13 is below both the 20-day moving average of $50.92 and the 50-day moving average of $57.58, indicating a bearish trend. Additionally, the recent 30-day return of -32.70% and the negative daily return mean of -1.26% further support the deterioration in price action. With the RSI at 18.89, the stock is in oversold territory, but the overall trend alignment is broken, warranting a sell decision."
+  },
+  "strategy_b": {
+    "name": "Value Contrarian",
+    "decision": "BUY",
+    "confidence": 8,
+    "justification": "The stock NKE has experienced a significant drop, with a recent drawdown of 36.37% and a current RSI of 18.89, indicating it is oversold. Additionally, it is currently 45.57% below its 52-week high, suggesting that there is potential for recovery. The price has decreased from $64.09 to $43.13 in the last 30 days, reflecting a strong sell-off that may present a buying opportunity."
+  },
+  "evaluator": {
+    "agents_agree": false,
+    "analysis": "The two strategies diverge significantly in their recommendations. Strategy A, the Momentum Trader, emphasizes the bearish trend indicated by the current price being below both moving averages and the negative returns, leading to a SELL decision. In contrast, Strategy B, the Value Contrarian, focuses on the oversold condition indicated by the RSI and the significant price drop, suggesting a potential recovery and a BUY decision. This fundamental difference in interpreting the same market data highlights the contrasting philosophies of trend-following versus contrarian approaches."
+  },
+  "debate_mode": {
+    "triggered": true,
+    "strategy_a_response": {
+      "name": "Momentum Trader",
+      "stance": "SELL",
+      "response": "While the stock is indeed oversold with an RSI of 18.89, the critical factor remains the bearish trend indicated by the price being below both the 20-day and 50-day moving averages. The recent 30-day return of -32.70% and the negative daily return mean of -1.26% highlight a persistent downtrend that outweighs the potential for a mean-reversion bounce. Therefore, the momentum logic supports maintaining a sell stance despite the oversold conditions."
+    },
+    "strategy_b_response": {
+      "name": "Value Contrarian",
+      "stance": "BUY",
+      "response": "While the Momentum Trader highlights the bearish trend due to the price being below moving averages, this may reflect panic rather than durable value. The significant drawdown of 36.37% and an RSI of 18.89 indicate that NKE is oversold, presenting a potential buying opportunity. The distance from the 52-week high of 45.57% further suggests that the stock could rebound, making it a favorable entry point for long-term investors."
+    },
+    "disagreement_change": "unchanged",
+    "post_debate_summary": "The debate left the disagreement unchanged: momentum and contrarian logic still interpret the same -32.704% 30-day move and RSI of 18.8929 in opposite ways. Neither side moved off its original SELL versus BUY stance."
+  },
+  "post_debate_synthesis": "The debate left the disagreement unchanged: momentum and contrarian logic still interpret the same -32.704% 30-day move and RSI of 18.8929 in opposite ways. Neither side moved off its original SELL versus BUY stance."
+}

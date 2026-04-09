@@ -14,7 +14,10 @@ from .evaluator import evaluate_strategies, run_debate_round
 from .market_data import build_market_data_context
 from .schemas import (
     DebateResult,
+    EvaluatorOutput,
+    MarketDataContext,
     StockRunOutput,
+    StrategyDecision,
     SummaryOutput,
     SummaryRow,
 )
@@ -30,7 +33,9 @@ class GraphState(TypedDict, total=False):
     """State passed between LangGraph nodes."""
 
     ticker: str
-    market_data_context: dict[str, Any]
+    # Keep graph-state annotations Python 3.9/LangGraph friendly.
+    # More specific models are enforced when assembling StockRunOutput.
+    market_data_context: Dict[str, Any]
     strategy_a: Any
     strategy_b: Any
     evaluator: Any
@@ -122,28 +127,28 @@ def build_graph(
         LOGGER.info("Ticker end: %s", output.ticker)
         return {"saved_output_path": str(output_path)}
 
-    builder.add_node("market_data", market_data_node)
-    builder.add_node("strategy_a", strategy_a_node)
-    builder.add_node("strategy_b", strategy_b_node)
-    builder.add_node("evaluator", evaluator_node)
-    builder.add_node("debate", debate_node)
-    builder.add_node("skip_debate", skip_debate_node)
-    builder.add_node("assemble", assemble_node)
-    builder.add_node("save", save_node)
+    builder.add_node("market_data_node", market_data_node)
+    builder.add_node("strategy_a_node", strategy_a_node)
+    builder.add_node("strategy_b_node", strategy_b_node)
+    builder.add_node("evaluator_node", evaluator_node)
+    builder.add_node("debate_node", debate_node)
+    builder.add_node("skip_debate_node", skip_debate_node)
+    builder.add_node("assemble_node", assemble_node)
+    builder.add_node("save_node", save_node)
 
-    builder.add_edge(START, "market_data")
-    builder.add_edge("market_data", "strategy_a")
-    builder.add_edge("market_data", "strategy_b")
-    builder.add_edge(["strategy_a", "strategy_b"], "evaluator")
+    builder.add_edge(START, "market_data_node")
+    builder.add_edge("market_data_node", "strategy_a_node")
+    builder.add_edge("market_data_node", "strategy_b_node")
+    builder.add_edge(["strategy_a_node", "strategy_b_node"], "evaluator_node")
     builder.add_conditional_edges(
-        "evaluator",
+        "evaluator_node",
         _route_after_evaluator,
-        {"debate": "debate", "skip_debate": "skip_debate"},
+        {"debate": "debate_node", "skip_debate": "skip_debate_node"},
     )
-    builder.add_edge("debate", "assemble")
-    builder.add_edge("skip_debate", "assemble")
-    builder.add_edge("assemble", "save")
-    builder.add_edge("save", END)
+    builder.add_edge("debate_node", "assemble_node")
+    builder.add_edge("skip_debate_node", "assemble_node")
+    builder.add_edge("assemble_node", "save_node")
+    builder.add_edge("save_node", END)
 
     return builder.compile()
 

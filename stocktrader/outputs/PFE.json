@@ -1,0 +1,47 @@
+{
+  "ticker": "PFE",
+  "run_date": "2026-04-08",
+  "market_data_summary": {
+    "history_rows": 250,
+    "has_full_30d_window": true,
+    "has_full_90d_window": true,
+    "has_full_1y_window": false,
+    "current_price": 27.47,
+    "price_30d_ago": 27.14,
+    "pct_change_30d": 1.2159,
+    "avg_daily_volume_30d": 40234986.0,
+    "volatility_30d": 0.0148,
+    "moving_avg_20d": 27.362,
+    "moving_avg_50d": 27.0976,
+    "daily_return_mean_30d": 0.0512,
+    "max_single_day_drop_90d": -3.4052,
+    "price_above_ma20": true,
+    "ma20_above_ma50": true,
+    "volume_vs_30d_avg": 0.8393,
+    "return_30d": 1.2159,
+    "return_90d": 6.804,
+    "distance_from_52w_high_pct": 3.7828,
+    "distance_from_52w_low_pct": 27.2348,
+    "recent_drawdown_pct": 3.7828,
+    "RSI_14": 51.3915,
+    "surge_or_drop_signal": "neutral"
+  },
+  "strategy_a": {
+    "name": "Momentum Trader",
+    "decision": "HOLD",
+    "confidence": 6,
+    "justification": "The current price of $27.47 is above the 20-day moving average of $27.362, and the 20-day moving average is also above the 50-day moving average of $27.0976, indicating a positive trend alignment. However, the volume is below the 30-day average at 0.8393, which suggests a lack of strong conviction in the current price movement. Additionally, the recent 30-day return of 1.2159% shows mild positive momentum, but not enough to warrant a strong buy signal."
+  },
+  "strategy_b": {
+    "name": "Value Contrarian",
+    "decision": "HOLD",
+    "confidence": 6,
+    "justification": "The stock is currently priced at $27.47, which is only 3.78% away from its 52-week high, indicating it is not significantly oversold. The RSI is at 51.39, suggesting that the stock is fairly balanced and not in an overheated state. Additionally, the recent drawdown of 3.78% does not indicate a strong sell-off, and the return over the last 30 days is a modest 1.22%. Therefore, holding is the most prudent decision at this time."
+  },
+  "evaluator": {
+    "agents_agree": true,
+    "analysis": "Both strategies recommend a HOLD decision, indicating a consensus on the current market conditions for PFE. The Momentum Trader highlights the positive trend alignment with moving averages, while the Value Contrarian emphasizes the stock's proximity to its 52-week high and balanced RSI. Both agents recognize the lack of strong conviction in the price movement and the modest recent returns, leading to a shared conclusion that holding is the best course of action."
+  },
+  "debate_mode": null,
+  "post_debate_synthesis": null
+}

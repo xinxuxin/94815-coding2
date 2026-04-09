@@ -1,0 +1,47 @@
+{
+  "strategies": [
+    "Momentum Trader",
+    "Value Contrarian"
+  ],
+  "stocks_analyzed": [
+    "JNJ",
+    "XOM",
+    "TSLA",
+    "PFE",
+    "NKE"
+  ],
+  "total_agreements": 3,
+  "total_disagreements": 2,
+  "results": [
+    {
+      "ticker": "JNJ",
+      "a_decision": "HOLD",
+      "b_decision": "HOLD",
+      "agree": true
+    },
+    {
+      "ticker": "XOM",
+      "a_decision": "HOLD",
+      "b_decision": "HOLD",
+      "agree": true
+    },
+    {
+      "ticker": "TSLA",
+      "a_decision": "SELL",
+      "b_decision": "BUY",
+      "agree": false
+    },
+    {
+      "ticker": "PFE",
+      "a_decision": "HOLD",
+      "b_decision": "HOLD",
+      "agree": true
+    },
+    {
+      "ticker": "NKE",
+      "a_decision": "SELL",
+      "b_decision": "BUY",
+      "agree": false
+    }
+  ]
+}

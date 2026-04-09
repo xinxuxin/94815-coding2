@@ -1,0 +1,47 @@
+{
+  "ticker": "JNJ",
+  "run_date": "2026-04-08",
+  "market_data_summary": {
+    "history_rows": 250,
+    "has_full_30d_window": true,
+    "has_full_90d_window": true,
+    "has_full_1y_window": false,
+    "current_price": 241.3,
+    "price_30d_ago": 246.28,
+    "pct_change_30d": -2.0221,
+    "avg_daily_volume_30d": 7740631.0,
+    "volatility_30d": 0.0096,
+    "moving_avg_20d": 240.159,
+    "moving_avg_50d": 240.1136,
+    "daily_return_mean_30d": -0.0635,
+    "max_single_day_drop_90d": -2.3115,
+    "price_above_ma20": true,
+    "ma20_above_ma50": true,
+    "volume_vs_30d_avg": 0.8588,
+    "return_30d": -2.0221,
+    "return_90d": 16.7562,
+    "distance_from_52w_high_pct": 2.9208,
+    "distance_from_52w_low_pct": 64.8675,
+    "recent_drawdown_pct": 2.9208,
+    "RSI_14": 59.0459,
+    "surge_or_drop_signal": "neutral"
+  },
+  "strategy_a": {
+    "name": "Momentum Trader",
+    "decision": "HOLD",
+    "confidence": 6,
+    "justification": "The current price of JNJ at 241.3 is above the 20-day moving average of 240.159, and the 20-day moving average is above the 50-day moving average of 240.1136, indicating a positive trend alignment. However, the 30-day return is negative at -2.0221, and the volume is below the 30-day average at 0.8588, suggesting a lack of strong buying momentum. Given these factors, the trend is mildly positive but not decisive enough to warrant a buy."
+  },
+  "strategy_b": {
+    "name": "Value Contrarian",
+    "decision": "HOLD",
+    "confidence": 6,
+    "justification": "The stock is currently priced at $241.3, which is only 2.92% below its 52-week high, indicating it is not significantly oversold. Additionally, the RSI is at 59.05, suggesting that the stock is neither in an overbought nor oversold condition. With a recent drawdown of 2.92% and a return of -2.02% over the last 30 days, the stock appears to be in a fairly balanced state, warranting a hold decision."
+  },
+  "evaluator": {
+    "agents_agree": true,
+    "analysis": "Both strategies recommend a HOLD decision, indicating a consensus on the current market conditions for JNJ. The Momentum Trader highlights the positive trend alignment with moving averages but notes weak buying momentum, while the Value Contrarian emphasizes the stock's balanced state with no significant oversold conditions. Their agreement stems from the shared observation of the stock's recent performance and current price positioning relative to moving averages and historical highs."
+  },
+  "debate_mode": null,
+  "post_debate_synthesis": null
+}

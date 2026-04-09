@@ -137,6 +137,8 @@ def invoke_structured_llm(
     try:
         return _parse_structured_output(first_response, schema)
     except (json.JSONDecodeError, ValidationError, ValueError) as exc:
+        if resolved_settings.llm_max_retries < 1:
+            raise
         repair_messages = list(messages)
         repair_messages.append({"role": "assistant", "content": first_response})
         repair_messages.append(

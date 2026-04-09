@@ -1,10 +1,16 @@
-# Outputs Placeholder
+# Outputs
 
-This directory is reserved for pre-generated grading outputs.
+This directory contains the grading-ready JSON artifacts generated from real market data.
 
-Expected final contents:
+Included files:
 
 - one JSON file per analyzed stock,
 - `summary.json`.
 
-No live outputs are included yet in this scaffolding phase.
+Current stock set:
+
+- `JNJ.json`
+- `XOM.json`
+- `TSLA.json`
+- `PFE.json`
+- `NKE.json`

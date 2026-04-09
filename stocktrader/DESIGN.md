@@ -84,4 +84,4 @@ The final repository should contain:
 - Groq is the default provider, accessed through the OpenAI-compatible client shape.
 - Provider selection is environment-driven.
 - Pydantic models are the source of truth for structured LLM input/output contracts.
-- Pre-generated outputs will be included later for grading, but are intentionally not generated during this scaffolding phase.
+- Pre-generated outputs are included for grading and were generated from real market data plus live LLM calls.
