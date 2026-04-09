@@ -10,7 +10,7 @@ from openai import OpenAI
 from pydantic import BaseModel, ValidationError
 
 from .config import Settings, get_settings
-from .schemas import MarketDataContext, StrategyDecision
+from .schemas import DebateTurn, EvaluatorOutput, MarketDataContext, StrategyDecision
 
 
 PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
@@ -71,12 +71,17 @@ class MockLLMClient:
         del model, temperature
         system_prompt = messages[0]["content"]
         context = _extract_context_from_messages(messages)
-        summary = context["market_data_summary"]
 
-        if "Momentum Trader" in system_prompt:
-            decision = _mock_momentum_decision(summary)
+        if "evaluator for two competing stock strategy agents" in system_prompt:
+            decision = _mock_evaluator_output(context)
+        elif "Strategy A in Debate Mode" in system_prompt:
+            decision = _mock_debate_turn_a(context)
+        elif "Strategy B in Debate Mode" in system_prompt:
+            decision = _mock_debate_turn_b(context)
+        elif "Momentum Trader" in system_prompt:
+            decision = _mock_momentum_decision(context["market_data_summary"])
         else:
-            decision = _mock_value_decision(summary)
+            decision = _mock_value_decision(context["market_data_summary"])
 
         return json.dumps(decision)
 
@@ -325,3 +330,61 @@ def _mock_value_decision(summary: dict[str, Any]) -> dict[str, Any]:
         "confidence": confidence,
         "justification": justification,
     }
+
+
+def _mock_evaluator_output(context: dict[str, Any]) -> dict[str, Any]:
+    """Create a deterministic evaluator output from strategy decisions."""
+
+    strategy_a = StrategyDecision.model_validate(context["strategy_a"])
+    strategy_b = StrategyDecision.model_validate(context["strategy_b"])
+    summary = context["market_data_context"]["market_data_summary"]
+    agree = strategy_a.decision == strategy_b.decision
+
+    if agree:
+        analysis = (
+            f"Both strategies land on {strategy_a.decision} because the same price evidence stands out. "
+            f"The 30-day return is {summary['return_30d']}% and the stock sits {summary['distance_from_52w_high_pct']}% below its 52-week high, so both agents can justify a similar stance from different angles. "
+            "Momentum and valuation are not pulling in opposite directions strongly enough to create a split."
+        )
+    else:
+        analysis = (
+            f"The disagreement comes from different interpretations of the same numbers. "
+            f"Momentum emphasizes the 30-day return of {summary['return_30d']}%, the moving-average setup, and volume ratio of {summary['volume_vs_30d_avg']}, while the contrarian view emphasizes drawdown of {summary['recent_drawdown_pct']}% and RSI of {summary['RSI_14']}. "
+            "One agent treats weakness as trend continuation risk, while the other treats it as a possible overreaction."
+        )
+
+    return EvaluatorOutput(agents_agree=agree, analysis=analysis).model_dump()
+
+
+def _mock_debate_turn_a(context: dict[str, Any]) -> dict[str, Any]:
+    """Create a deterministic momentum rebuttal."""
+
+    market = context["market_data_context"]["market_data_summary"]
+    original = StrategyDecision.model_validate(context["your_original_output"])
+    response = (
+        f"My original {original.decision} stance still follows the price trend because the 30-day return is {market['return_30d']}% and price is {'above' if market['price_above_ma20'] else 'below'} the 20-day average. "
+        f"The 20-day average at {market['moving_avg_20d']} versus the 50-day average at {market['moving_avg_50d']} still matters more than trying to fade the move early. "
+        "Oversold readings can persist when trend structure remains weak."
+    )
+    return DebateTurn(
+        name="Momentum Trader",
+        stance=original.decision,
+        response=response,
+    ).model_dump()
+
+
+def _mock_debate_turn_b(context: dict[str, Any]) -> dict[str, Any]:
+    """Create a deterministic contrarian rebuttal."""
+
+    market = context["market_data_context"]["market_data_summary"]
+    original = StrategyDecision.model_validate(context["your_original_output"])
+    response = (
+        f"My original {original.decision} stance still reflects overreaction risk because drawdown is {market['recent_drawdown_pct']}% and RSI is {market['RSI_14']}. "
+        f"Being {market['distance_from_52w_high_pct']}% below the 52-week high suggests sentiment may already be washed out. "
+        "Trend weakness alone does not rule out a mean-reversion opportunity."
+    )
+    return DebateTurn(
+        name="Value Contrarian",
+        stance=original.decision,
+        response=response,
+    ).model_dump()

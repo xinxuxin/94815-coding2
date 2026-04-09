@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
-from typing import Union
+from typing import Any, Union
 
 
 def repo_root() -> Path:
@@ -24,3 +25,12 @@ def ensure_directory(path: Union[str, Path]) -> Path:
     directory = Path(path)
     directory.mkdir(parents=True, exist_ok=True)
     return directory
+
+
+def write_json(path: Union[str, Path], payload: Any) -> Path:
+    """Write JSON payload to disk with stable formatting."""
+
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    return output_path

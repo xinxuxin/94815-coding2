@@ -1,0 +1,61 @@
+{
+  "ticker": "TSLA",
+  "run_date": "2026-04-08",
+  "market_data_summary": {
+    "history_rows": 250,
+    "has_full_30d_window": true,
+    "has_full_90d_window": true,
+    "has_full_1y_window": false,
+    "current_price": 343.25,
+    "price_30d_ago": 409.38,
+    "pct_change_30d": -16.1537,
+    "avg_daily_volume_30d": 63338819.0,
+    "volatility_30d": 0.0237,
+    "moving_avg_20d": 376.2635,
+    "moving_avg_50d": 397.6616,
+    "daily_return_mean_30d": -0.5573,
+    "max_single_day_drop_90d": -5.4215,
+    "price_above_ma20": false,
+    "ma20_above_ma50": false,
+    "volume_vs_30d_avg": 1.2356,
+    "return_30d": -16.1537,
+    "return_90d": -18.1569,
+    "distance_from_52w_high_pct": 29.9318,
+    "distance_from_52w_low_pct": 50.8791,
+    "recent_drawdown_pct": 29.9318,
+    "RSI_14": 31.9852,
+    "surge_or_drop_signal": "drop"
+  },
+  "strategy_a": {
+    "name": "Momentum Trader",
+    "decision": "SELL",
+    "confidence": 7,
+    "justification": "The stock is trading at 343.25 with a 30-day return of -16.1537%. The 20-day average is 376.2635 and the 50-day average is 397.6616, which defines the current trend setup. Volume is running at 1.2356 times the 30-day average, so the move has measurable confirmation. Momentum therefore favors SELL rather than a contrarian reversal call."
+  },
+  "strategy_b": {
+    "name": "Value Contrarian",
+    "decision": "BUY",
+    "confidence": 8,
+    "justification": "The stock sits 29.9318% below its 52-week high and 50.8791% above its 52-week low. Recent drawdown is 29.9318% and RSI is 31.9852, which helps judge whether the move reflects fear or greed. The 30-day return is -16.1537%, so the recent move can be interpreted as a valuation stretch rather than simple trend continuation. A contrarian reading therefore lands on BUY."
+  },
+  "evaluator": {
+    "agents_agree": false,
+    "analysis": "The disagreement comes from different interpretations of the same numbers. Momentum emphasizes the 30-day return of -16.1537%, the moving-average setup, and volume ratio of 1.2356, while the contrarian view emphasizes drawdown of 29.9318% and RSI of 31.9852. One agent treats weakness as trend continuation risk, while the other treats it as a possible overreaction."
+  },
+  "debate_mode": {
+    "triggered": true,
+    "strategy_a_response": {
+      "name": "Momentum Trader",
+      "stance": "SELL",
+      "response": "My original SELL stance still follows the price trend because the 30-day return is -16.1537% and price is below the 20-day average. The 20-day average at 376.2635 versus the 50-day average at 397.6616 still matters more than trying to fade the move early. Oversold readings can persist when trend structure remains weak."
+    },
+    "strategy_b_response": {
+      "name": "Value Contrarian",
+      "stance": "BUY",
+      "response": "My original BUY stance still reflects overreaction risk because drawdown is 29.9318% and RSI is 31.9852. Being 29.9318% below the 52-week high suggests sentiment may already be washed out. Trend weakness alone does not rule out a mean-reversion opportunity."
+    },
+    "disagreement_change": "unchanged",
+    "post_debate_summary": "The debate left the disagreement unchanged: momentum and contrarian logic still interpret the same -16.1537% 30-day move and RSI of 31.9852 in opposite ways. Neither side moved off its original SELL versus BUY stance."
+  },
+  "post_debate_synthesis": "The debate left the disagreement unchanged: momentum and contrarian logic still interpret the same -16.1537% 30-day move and RSI of 31.9852 in opposite ways. Neither side moved off its original SELL versus BUY stance."
+}

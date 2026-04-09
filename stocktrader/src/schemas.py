@@ -14,6 +14,7 @@ SENTENCE_SPLIT_PATTERN = re.compile(r"(?<=[.!?])\s+")
 Decision = Literal["BUY", "HOLD", "SELL"]
 StrategyName = Literal["Momentum Trader", "Value Contrarian"]
 SurgeDropSignal = Literal["surge", "drop", "neutral"]
+DebateChange = Literal["narrowed", "widened", "unchanged"]
 
 
 class MarketDataSummary(BaseModel):
@@ -116,6 +117,16 @@ class DebateTurn(BaseModel):
         ..., description="Short rebuttal or defense after reading the evaluator summary."
     )
 
+    @field_validator("response")
+    @classmethod
+    def validate_response(cls, value: str) -> str:
+        """Require a short, complete rebuttal."""
+
+        sentences = [part.strip() for part in SENTENCE_SPLIT_PATTERN.split(value.strip()) if part.strip()]
+        if len(sentences) < 2 or len(sentences) > 4:
+            raise ValueError("Debate response must contain 2 to 4 complete sentences.")
+        return value
+
 
 class DebateResult(BaseModel):
     """Optional bonus output attached only when disagreement occurs."""
@@ -125,6 +136,7 @@ class DebateResult(BaseModel):
     triggered: bool = False
     strategy_a_response: Optional[DebateTurn] = None
     strategy_b_response: Optional[DebateTurn] = None
+    disagreement_change: Optional[DebateChange] = None
     post_debate_summary: Optional[str] = None
 
 
@@ -140,6 +152,7 @@ class StockRunOutput(BaseModel):
     strategy_b: StrategyDecision
     evaluator: EvaluatorOutput
     debate_mode: Optional[DebateResult] = None
+    post_debate_synthesis: Optional[str] = None
 
 
 class SummaryRow(BaseModel):
